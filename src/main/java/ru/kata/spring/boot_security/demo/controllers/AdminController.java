@@ -17,42 +17,5 @@ public class AdminController {
     public String admin() {
         return "admin/adminpage";
     }
-//    private final UserService userService;
 
-
-//    @Autowired
-//    public AdminController(UserService userService) {
-//        this.userService = userService;
-//    }
-//
-//    @GetMapping()
-//    public String allUser(Model model, Principal principal) {
-//        model.addAttribute("users", userService.findAll());
-//        model.addAttribute("currentUser", userService.findByUsername(principal.getName()));
-//        model.addAttribute("roleList", userService.getRoles());
-//        return "admin/adminpage";
-//    }
-//
-//
-//    @PostMapping()
-//    public String create(@ModelAttribute("user") User user) {
-//        user.setRoles(user.getRoles());
-//        userService.saveUser(user);
-//        return "redirect:/admin";
-//    }
-//
-//
-//
-//    @PatchMapping("/{id}")
-//    public String update(@ModelAttribute("user") User user,
-//                         @PathVariable("id") Long id) {
-//        userService.updateUser(id, user);
-//        return "redirect:/admin";
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public String delete(@PathVariable("id") Long id) {
-//        userService.deleteUser(id);
-//        return "redirect:/admin";
-//    }
 }

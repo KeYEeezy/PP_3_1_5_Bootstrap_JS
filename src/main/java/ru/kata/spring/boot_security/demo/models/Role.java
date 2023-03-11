@@ -58,13 +58,6 @@ public class Role implements GrantedAuthority {
         return Objects.equals(id, role.id);
     }
 
-//    public Set<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Set<User> users) {
-//        this.users = users;
-//    }
 
     @Override
     public int hashCode() {

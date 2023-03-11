@@ -9,6 +9,7 @@ import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.services.UserService;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,7 +33,11 @@ public class UserCreator {
         roles.add(new Role(1L, ROLE_USER));
         roles.add(new Role(2L, ROLE_ADMIN));
         User user = new User("user", "user", 26, "user@mail.ru", "user", Set.of(new Role(1L,ROLE_USER)));
+        user.setCreatedAt(LocalDateTime.now());
+        user.setCreatedWho("AutoCreated");
         User admin = new User("admin", "admin", 26, "admin@mail.ru", "admin", roles);
+        admin.setCreatedAt(LocalDateTime.now());
+        admin.setCreatedWho("AutoCreated");
         return List.of(admin,user);
 
     }

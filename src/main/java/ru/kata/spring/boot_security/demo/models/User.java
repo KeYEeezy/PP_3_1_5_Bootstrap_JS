@@ -6,6 +6,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,15 +21,35 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "first_name")
+    @NotEmpty(message = "Name should not be empty")
+    @Size(min = 2, max = 40, message = "Name should be between 2 and 40 characters")
     private String firstName;
     @Column(name = "last_name")
+    @NotEmpty(message = "Name should not be empty")
+    @Size(min = 2, max = 40, message = "Name should be between 2 and 40 characters")
     private String lastName;
     @Column(name = "age")
+    @Min(value = 0, message = "Age should be greater than 0")
     private int age;
     @Column(name = "email", unique = true)
+    @Email
+    @NotEmpty(message = "Email should not be empty")
     private String email;
     @Column(name = "password")
     private String password;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "created_who")
+    private String createdWho;
+
+    @Column(name = "updated_who")
+    private String updatedWho;
+
 
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
@@ -63,6 +88,14 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUpdatedWho() {
+        return updatedWho;
+    }
+
+    public void setUpdatedWho(String updatedWho) {
+        this.updatedWho = updatedWho;
     }
 
     public String getFirstName() {
@@ -114,15 +147,43 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getCreatedWho() {
+        return createdWho;
+    }
+
+    public void setCreatedWho(String createdWho) {
+        this.createdWho = createdWho;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + firstName + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", createdWho='" + createdWho + '\'' +
+                ", updatedWho='" + updatedWho + '\'' +
                 ", roles=" + roles +
                 '}';
     }

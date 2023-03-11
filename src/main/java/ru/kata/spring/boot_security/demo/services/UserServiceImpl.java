@@ -14,6 +14,8 @@ import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 ;
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
     }
 
@@ -73,21 +76,21 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(Long id, User updatedUser) {
-//        updatedUser.setId(id);
-        if (!updatedUser.getPassword().equals(Objects.requireNonNull(userRepository.findById(updatedUser.getId()).orElse(null).getPassword()))) {
+        User temp = userRepository.getById(id);
+
+        if (!updatedUser.getPassword().equals(temp.getPassword())) {
             updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         } else {
-            updatedUser.setPassword(userRepository.findById(updatedUser.getId()).orElse(null).getPassword());
+            updatedUser.setPassword(temp.getPassword());
         }
+        updatedUser.setCreatedAt(temp.getCreatedAt());
+        updatedUser.setCreatedWho(temp.getCreatedWho());
+        updatedUser.setUpdatedAt(LocalDateTime.now());
         userRepository.saveAndFlush(updatedUser);
     }
 
     public List<Role> getRoles() {
         return roleRepository.findAll();
-    }
-
-    public Role findRoleById(Long id) {
-        return roleRepository.findById(id).orElse(null);
     }
 
 

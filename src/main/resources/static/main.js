@@ -230,7 +230,7 @@ async function thisUser() {
         .then(res => res.json())
         .then(data => {
             // Добавляем информацию в шапку
-            $('#headerUsername').append(data.username);
+            $('#headerUsername').append(data.email);
             let roles = data.roles.map(role => " " + role.name.substring(5));
             $('#headerRoles').append(roles);
 
